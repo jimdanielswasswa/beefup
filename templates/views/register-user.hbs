@@ -1,0 +1,45 @@
+<style>
+    main {
+        height: 100%;
+    }
+    .heading-tertiary {
+        color: #ffffff;
+        font-size: 2.5rem;
+        text-align: center;
+    }
+    .divider {
+        margin: 1rem 0;
+        color: #ffffff;
+    }
+</style>
+<div class="register-form">
+    <h3 class="heading-tertiary">Login</h3>
+    <hr class="divider" />
+    <form action="/users/" method="POST">
+        <div class="control-group">
+            <label for="username" class="control-label">Username</label>
+            <input type="text" name="username" id="username" class="control" placeholder="Username" />
+        </div>
+        <div class="control-group">
+            <label for="email" class="control-label">Email</label>
+            <input type="email" name="email" id="email" class="control" placeholder="Email" />
+        </div>
+        <div class="control-group">
+            <label for="password" class="control-label">Password</label>
+            <input type="password" name="password" id="password" class="control" placeholder="Password" />
+        </div>
+        <div class="control-group">
+            <label for="confirm_password" class="control-label">Confirm Password</label>
+            <input type="password" name="confirm_password" id="confirm_password" class="control" placeholder="Confirm Password" />
+        </div>
+        <div class="control-group">
+            <label for="isadmin" class="control-label">
+                Admin
+                <input type="checkbox" name="isadmin" id="isadmin" />
+            </label>
+        </div>
+        <div class="control-group text-center">
+            <input type="submit" value="Create User" class="btn btn-primary" />
+        </div>
+    </form>
+</div>

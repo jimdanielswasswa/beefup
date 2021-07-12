@@ -1,0 +1,126 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Restaurant</title>
+    <link rel="stylesheet" href="styles/css/fontawesome-all.min.css">
+    <link rel="stylesheet" type="text/css" href="styles/css/main.css" />
+    <link rel="stylesheet" type="text/css" href="styles/css/grid.css" />
+</head>
+
+<body>
+    <div class="container">
+        {{>header}}
+        <main>
+            {{{body}}}
+        </main>
+        {{>footer}}
+        <div class="modal-container" id="contact-modal">
+            <div class="modal-content">
+                <div class="modal-header clear-fix">
+                    <h3 class="modal-heading">Contact Us</h3>
+                    <a class="modal-close" href="#"><i class="fas fa-times"></i></a>
+                </div>
+                <div class="modal-body">
+                    <div class="contact-form">
+                        <form name="contact-form">
+                            <div class="control-group">
+                                <label for="name" class="control-label">Name</label>
+                                <input type="text" name="name" id="name" class="control form-control"
+                                    required="required" placeholder="Name" />
+                            </div>
+                            <div class="control-group">
+                                <label for="email" class="control-label">Email</label>
+                                <input type="email" name="email" id="email" required="required"
+                                    class="control form-control" placeholder="Email" />
+                            </div>
+                            <div class="control-group">
+                                <label for="phone" class="control-label">Phone Number</label>
+                                <input type="tel" name="phone" id="phone" class="control form-control"
+                                    placeholder="Phone Number" minlength="10" />
+                            </div>
+                            <div class="control-group">
+                                <label for="message" class="control-label">Message</label>
+                                <textarea name="message" id="message" rows="8" class="control form-textarea"
+                                    placeholder="Message" minlength="10" required="required"></textarea>
+                            </div>
+                            <div class="control-group">
+                                <input type="submit" value="Send" class="btn btn-primary" />
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+            <div class="modal-footer"></div>
+        </div>
+    </div>
+    <div class="modal-container" id="reservation-modal">
+        <div class="modal-content">
+            <div class="modal-header clear-fix">
+                <h3 class="modal-heading">Book A Table</h3>
+                <a class="modal-close" href="#"><i class="fas fa-times"></i></a>
+            </div>
+            <div class="modal-body">
+                <div class="reservation-form">
+                    <form name="reservation-form">
+                        <div class="control-group">
+                            <label for="name" class="control-label">Name</label>
+                            <input type="text" name="name" id="name" class="control form-control" required="required"
+                                placeholder="Name" />
+                        </div>
+                        <div class="control-group">
+                            <label for="email" class="control-label">Email</label>
+                            <input type="email" name="email" id="email" required="required" class="control form-control"
+                                placeholder="Email" />
+                        </div>
+                        <div class="control-group">
+                            <label for="phone" class="control-label">Phone Number</label>
+                            <input type="tel" name="phone" id="phone" class="control form-control"
+                                placeholder="Phone Number" minlength="10" />
+                        </div>
+                        <div class="control-group">
+                            <label for="message" class="control-label">Additional Details</label>
+                            <textarea name="message" id="message" rows="2" class="control form-textarea"
+                                placeholder="Additional Details" minlength="10" required="required"></textarea>
+                        </div>
+                        <div class="control-group clear-fix">
+                            <label for="reservation-date" class="control-label">Date & Time Booked</label>
+                            <div class="row">
+                                <div class=col-1-0f-3>
+                                    <input type="date" name="reservation-date" id="reservation-time"
+                                        class="control form-control" placeholder="Time Booked" required="required" />
+                                </div>
+                                <div class="col-2-of-3">
+                                    <input type="time" name="reservation-time" id="reservation-time"
+                                        class="control form-control" placeholder="Time Booked" required="required" />
+                                </div>
+                            </div>
+                        </div>
+                        <div class="control-group">
+                            <input type="submit" value="Send" class="btn btn-primary" />
+                        </div>
+                    </form>
+                </div>
+            </div>
+            <div class="modal-footer"></div>
+        </div>
+        
+            <!--<div class="modal-container" id="modal">
+            <div class="modal-content">
+                <div class="modal-header clear-fix">
+                    <h3 class="modal-heading"></h3>
+                    <a class="modal-close" href="#"><i class="fas fa-times"></i></a>
+                </div>
+                <div class="modal-body">
+
+                </div>
+                <div class="modal-footer"></div>
+            </div>
+        </div>-->
+            <script src="scripts/js/main.js"></script>
+</body>
+
+</html>

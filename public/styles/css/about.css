@@ -1,0 +1,14 @@
+footer {
+    position: relative;
+    color: #3f2800;
+}
+.about-aside {
+    height: 100%;
+    overflow: auto;
+}
+
+@media (max-width: 37.5em){ /* 600px */
+    .about-aside {
+        padding: 1rem 0;
+    }
+}
