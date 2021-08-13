@@ -1,24 +1,38 @@
 const mongoose = require('mongoose');
+const User = require('./User');
 
-const MenuItem = mongoose.model('MenuItem', {
-    itemName: {
+const menuItemSchema = new mongoose.Schema({
+    itemname: {
         type: String,
         required: true,
-        trim: true
+        trim: true,
+        unique: true
     },
     description: {
-        typ: String,
+        type: String,
         trim: true
     },
     price: {
-        type: double
-    },
-    createdBy: {
-        type: mongoose.Types.ObjectId,
+        type: mongoose.Types.Decimal128,
         required: true
+    },
+    image: {
+        type: Buffer,
+        required: true
+    },
+    createdby: {
+        type: mongoose.Types.ObjectId,
+        required: true,
+        ref: User
     }
 }, {
     timestamps: true
 });
+menuItemSchema.methods.get_menuItem = function() {
+    const obj = this.toObject();
+    delete obj.image;
+    return obj;
+};
+const MenuItem = mongoose.model('MenuItem', menuItemSchema);
 
 module.exports = MenuItem;
