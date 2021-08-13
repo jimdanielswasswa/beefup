@@ -3,6 +3,7 @@ html {
     scrollbar-width: thin;
     scrollbar-color: #e99200 #e99200;
     scroll-padding-top: 2rem;
+    height: 100vh;
  }
  *::-webkit-scrollbar {
     width: 10px;
@@ -21,8 +22,8 @@ body {
     font-size: 100%;
     font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', Helvetica, sans-serif;
     position: relative;
-    overflow: hidden;
-    height: 100vh;
+    overflow: auto;
+    min-height: 100vh;
 }
 *, 
 *::before,
@@ -44,17 +45,18 @@ main {
     position: relative;
     background-color: #fffdfa;
     width: 100%;
+    min-height: 100vh;
     padding: 2rem 1rem;
     padding-bottom: 2rem;
-    overflow: hidden;
+    overflow: visible;
 }
 .container {
     width: 100%;
     margin: 0 auto;
-    height: 70vh;
+    height: 100%;
     position: relative;
     background-color: #fffdfa;
-    overflow: auto;
+    overflow: visible;
 }
 .container::after {
     content: "";
@@ -112,7 +114,7 @@ footer {
     position: relative;
     padding: 2rem 1.5rem;
     width: 100%;
-    height: 15vh;
+    /* height: 15vh; */
     font-size: 1.8rem;
     color: #3f2800;
     background-color: #ffe4b6;
@@ -269,8 +271,6 @@ table tr:not(:last-child) {
 .ribbon {
     position: relative;
     width: 100%;
-    height: auto;
-    /* height: 15vh; */
     font-size: 1.8rem;
     background-color: #ffab1d;
     padding: 1rem 2.5rem;
@@ -437,6 +437,9 @@ table tr:not(:last-child) {
     .footer-nav li {
         float: left;
     }
+    #login-modal > .modal-content {
+        width: 55%;
+    }
 }
 @media (max-width: 60.94em) { /* 975px */
     .ribbon { height: auto; }
@@ -492,13 +495,15 @@ table tr:not(:last-child) {
         height: 90%;
         overflow: auto;
     }
+    #login-modal > .modal-content {
+        width: 55%;
+    }
 }
 @media (max-width: 37.5em){ /* 600px */
     header { text-align: left; }
     footer {
         padding-top: 0;
         padding-bottom: 2.5rem;
-        height: auto;
     }   
     .copyrite { text-align: center; }
     .footer-nav {
@@ -510,6 +515,9 @@ table tr:not(:last-child) {
     }
     .heading-primary {
         display: inline-block;
+    }
+    #login-modal > .modal-content {
+        width: 75%;
     }
 }
 @keyframes animated-ribbon-top-to-bottom {

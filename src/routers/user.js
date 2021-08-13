@@ -25,7 +25,7 @@ router.get('/users/:id', auth, async (req, res) => {
 });
 router.post('/users/', async (req, res) => {
     const { username, password, confirm_password, email, isadmin } = req.body;
-    // try {
+    try {
         if (!username) {
             return res.status(400).json({ error: 'Username Is Required.', data: undefined });
         } else {
@@ -51,9 +51,9 @@ router.post('/users/', async (req, res) => {
             // return res.render('users', { layout: 'admin-master', error: undefined, message: 'User Successfully Created.', data: user.getPublicInfo() });
             res.redirect('/users/');
         }
-    // } catch (e) {
-    //     res.status(500).json({ error: e.message, data: undefined, e, d: req.body });
-    // }
+    } catch (e) {
+        res.status(500).json({ error: e.message, data: undefined, e, d: req.body });
+    }
 });
 // Handles PATCH / PUT
 router.post('/users/:id', auth, async (req, res) => {
