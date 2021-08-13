@@ -1,7 +1,7 @@
 const mongoose = require('mongoose');
 const chalk = require('chalk');
 
-mongoose.connect('mongodb://127.0.0.1:27017/beefup-db', {
+mongoose.connect(process.env.MONGODB_URI || 'mongodb://127.0.0.1:27017/beefup-db', {
     useCreateIndex: true,
     useNewUrlParser: true,
     useUnifiedTopology: true,
