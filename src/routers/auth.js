@@ -9,19 +9,21 @@ router.get('/login', (req, res) => {
     res.render('admin-login', { layout: 'master' });
 });
 router.post('/login', async (req, res) => {
-    try {
-        console.log('aaaaaaaaaaaaa\n Here \naaaaaaaaaaaaaaa');
-        // const user = await User.findByCredentials(req.body.username, req.body.password);
-        // const token = await user.generateAuthToken();
-        // res.render('admin-dashboard', { layout: 'master', auth_user: user.getPublicInfo(), token });
-        passport.authenticate('local-signin',  {
-            successRedirect: '/users/',
-            failureRedirect: '/login/',
-            failureFlash: true
-        })
-    } catch (e) {
-        console.log('Login Failed Invalid Credentials.');
-    }
+    // try {
+        const user = await User.findByCredentials(req.body.username, req.body.password);
+        const token = await user.generateAuthToken();
+        // res.status(200).json({ auth_user: user.getPublicInfo(), token });
+        res.cookie('token', token, { httpOnly: true });
+        // passport.authenticate('local-signin',  {
+        //     successRedirect: '/users/',
+        //     failureRedirect: '/login/',
+        //     failureFlash: true
+        // })
+        res.redirect('/users/');
+    // } catch (e) {
+    //     console.log('Login Failed. Invalid Credentials.');
+    //     res.status(400).json({ error: 'Login Failed. Invalid Credentials.' });
+    // }
 });
 router.get('/register', (req, res) => {
     res.render('register-user', { layout: 'master' });
