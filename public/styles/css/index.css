@@ -1,9 +1,8 @@
-main {
+main,.container {
     padding: 0;
     background-color: transparent;
 }
-.container {  
-    height: 100%; 
+body {
     background-image: url(../images/alexandru-bogdan-ghita-UeYkqQh4PoI-unsplash.jpg);
     background-position: top;
     background-size: cover;
@@ -23,14 +22,16 @@ main {
 }
 .ribbon {
     position: absolute;
-    bottom: 10%;
+    bottom: 15%;
     left: 0;
+    z-index: 1000;
     animation: animated-ribbon-top-to-bottom 2s ease-in 0s;
 }
 footer {
     position: absolute;
     bottom: 0;
     left: 0;
+    z-index: 1000;
 }
 .social-media,
 .social-media:hover {

@@ -1,6 +1,7 @@
 .gallery-image-container {
     height: 25rem;
     overflow: hidden;
+    position: relative;
 }
 .gallery-image {
     width: 100%;

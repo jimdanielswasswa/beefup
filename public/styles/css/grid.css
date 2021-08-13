@@ -19,7 +19,9 @@
 .col-3-0f-4 {
     width: calc(3 * (100% / 4));
 }
-
+.col-4-0f-4 {
+    width: calc(4 * (100% / 4));
+}
 
 @media (max-width: 68.75em){ /* 1100px */
     .col-1-0f-4 {

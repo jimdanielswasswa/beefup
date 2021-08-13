@@ -1,15 +1,28 @@
-html { font-size: 62.5%; /* 100 / 16 x 10 */
+html { 
+    font-size: 62.5%; /* 100 / 16 x 10 */
     scrollbar-width: thin;
     scrollbar-color: #e99200 #e99200;
     scroll-padding-top: 2rem;
  }
+ *::-webkit-scrollbar {
+    width: 10px;
+}
+*::-webkit-scrollbar-track {
+    background-color: #e99200;
+    border-radius: 2rem;
+}
+*::-webkit-scrollbar-thumb {
+    background-color: #ffb12e; 
+    border-radius: 2rem;
+}
 body {   
     box-sizing: border-box; 
     background-color: #fffdfa; 
-    font-size: 100%; 
-    /* width: 100vw; */
-    height: 100vh;    
+    font-size: 100%;
     font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', Helvetica, sans-serif;
+    position: relative;
+    overflow: hidden;
+    height: 100vh;
 }
 *, 
 *::before,
@@ -21,23 +34,27 @@ body {
     scrollbar-color: inherit;
 }
 header {
-    padding: 1.5rem 0;
     transition: all linear .4s;
 }
 nav {
-    padding: 1rem 0;
+    padding-bottom: 2.5rem;
     transition: all linear .4s;
 }
 main {
+    position: relative;
     background-color: #fffdfa;
     width: 100%;
     padding: 2rem 1rem;
+    padding-bottom: 2rem;
+    overflow: hidden;
 }
 .container {
     width: 100%;
-    height: 100%;
+    margin: 0 auto;
+    height: 70vh;
     position: relative;
     background-color: #fffdfa;
+    overflow: auto;
 }
 .container::after {
     content: "";
@@ -46,7 +63,7 @@ main {
 }
 .row {
     max-width: 100%;
-    margin: 0 auto;
+    /* margin: 0 auto; */
     position: relative;
 }
 a {
@@ -92,15 +109,20 @@ a:hover {
     color: #3f2800;
 }
 footer {
-    padding-top: 4rem;
-    padding: 1rem 1.5rem;
+    position: relative;
+    padding: 2rem 1.5rem;
     width: 100%;
+    height: 15vh;
     font-size: 1.8rem;
     color: #3f2800;
     background-color: #ffe4b6;
+    /* margin-top: 1rem; */
 }
 .copyrite {
     line-height: 4rem;
+}
+.table-container {
+    overflow: auto;
 }
 table {
     border-collapse: collapse;
@@ -122,6 +144,20 @@ table tr:not(:last-child) {
     float: right;
     display: block;
     padding: 0 1rem;
+}
+.sidebar {
+    width: 100%;
+    padding: 1rem 1.5rem;
+}
+.sidebar-menu {
+    background-color: #ffab1d;
+    list-style: none;
+    padding: 1.5rem 2.5rem;
+}
+.sidebar-menu li a {
+    display: block;
+    font-size: 1.5rem;
+    padding: 1.5rem 0;
 }
 .modal-container {
     position: fixed;
@@ -153,7 +189,7 @@ table tr:not(:last-child) {
     overflow: auto;
 }
 .modal-header {
-    color: #fff7e9;
+    color: #44403a;
     border-bottom: .2rem solid #3f2800;
     padding: 1.5rem 0;
     text-transform: uppercase;
@@ -183,6 +219,11 @@ table tr:not(:last-child) {
     font-family: inherit; 
     /* text-transform: uppercase; */
 }
+/* .heading-tertiary {
+    color: #ffffff;
+    font-size: 2.5rem;
+    text-align: center;
+} */
 .sub-heading {
     font-size: 2rem;
     font-weight: normal;
@@ -228,6 +269,9 @@ table tr:not(:last-child) {
 .ribbon {
     position: relative;
     width: 100%;
+    height: auto;
+    /* height: 15vh; */
+    font-size: 1.8rem;
     background-color: #ffab1d;
     padding: 1rem 2.5rem;
     transition: all linear .4s;
@@ -239,6 +283,9 @@ table tr:not(:last-child) {
     border-radius: 100%;
     width: 500px;
     height: 500px;
+}
+.table-container {
+    padding-top: 2rem;
 }
 .pull-left {
     float: left;
@@ -295,26 +342,30 @@ table tr:not(:last-child) {
     height: 4rem;
 }
 #contact-modal,
-#reservation-modal {
+#reservation-modal,
+#login-modal {
     background-color: rgba(0, 0, 0, 0);
 }
 #contact-modal > .modal-content,
-#reservation-modal > .modal-content {
+#reservation-modal > .modal-content,
+#login-modal > .modal-content {
     background-color: #ffb73f;
     width: 35%;
     height: auto;
 }
-.login-form {    
-    background-color: #ffb73f;
+.login-form {
     margin: auto;
-    padding: 1.5rem;
+    padding: 0 1.5rem;
     border-radius: 2rem;
-    width: 25%;
+    width: 95%;
 }
 .btn {
-    padding: .8rem 2rem;
+    padding: .8rem 1rem;
     border: none;
     border-radius: .5rem;
+    font-size: 1.5rem;
+    font-weight: bold;
+    margin: .5rem;
 }
 .btn:focus {
     outline: none;
@@ -323,13 +374,19 @@ table tr:not(:last-child) {
 .btn-primary {
     background-color: #e99200;
     color: #fff7e9;
-    font-size: 1.8rem;
+}
+.btn-warning {    
+    background-color: #ff7b68;
+    color: #fff7e9;
 }
 [type="date"] {
     border-radius: .5rem 0 0 .5rem;
 }
 [type="time"] {
     border-radius: 0 .5rem .5rem 0;
+}
+.link-divider {
+    border-bottom: .1rem solid #3f2800;
 }
 .full-height {
     height: 100%;
@@ -344,8 +401,35 @@ table tr:not(:last-child) {
     /* background-color: #00ff00; */
     height: 45rem;
 }
-
+.text-error {
+    color: #ff0000;
+    font-size: 1.5rem;
+    padding-bottom: 1rem; 
+    display: block;
+}
+.text-success {
+    color: #00ff00;
+    font-size: 1.5rem; 
+    padding-bottom: 1rem; 
+    display: block;
+}
+.command-list {
+    color: #ffe4b6;
+    font-size: 1.5rem;
+    position: absolute;
+    padding: 1rem;
+    top: 0;
+    right: 0;
+    width: 20%;
+    z-index: 1000;
+    text-align: right;
+}
+.command-list > a {
+    color: #ffe4b6;
+    font-size: 2rem;
+}
 @media (max-width: 68.75em){ /* 1100px */
+    footer { padding-bottom: 2.5rem; }
     .navigation-nav { 
         width: 85%; 
         margin: 0 auto;
@@ -355,6 +439,7 @@ table tr:not(:last-child) {
     }
 }
 @media (max-width: 60.94em) { /* 975px */
+    .ribbon { height: auto; }
     .navigation {
         height: 0;
         opacity: 0;
@@ -411,7 +496,9 @@ table tr:not(:last-child) {
 @media (max-width: 37.5em){ /* 600px */
     header { text-align: left; }
     footer {
+        padding-top: 0;
         padding-bottom: 2.5rem;
+        height: auto;
     }   
     .copyrite { text-align: center; }
     .footer-nav {
@@ -435,7 +522,7 @@ table tr:not(:last-child) {
     }
     100% {
         opacity: 1;
-        bottom: 10%;
+        bottom: 15%;
     }
 }
 @keyframes animated-text-rigt-to-left {
