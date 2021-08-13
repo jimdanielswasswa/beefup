@@ -1,0 +1,89 @@
+<link rel="stylesheet" type="text/css" href="/static/styles/css/users.css" />
+<div class="col-3-0f-4 table-container">
+    <div class="row">
+        <div class="col-4-0f-4">
+            <a href="#user-modal" class="link btn btn-primary" id="add-user">Add A New User</a>
+        </div>
+    </div>
+    <span id="page-success" class="text-success"></span>
+    <span id="page-error" class="text-error"></span>
+    <table>
+        <thead>
+            <tr>
+                <td>No.</td>
+                <td>Username</td>
+                <td>Email</td>
+                <td>Admin</td>
+                <td>Added</td>
+                <td>Actions</td>
+            </tr>
+        </thead>
+        <tbody>
+            {{#each users}}
+            <tr>
+                <td>{{_increment @index}}</td>
+                <td>{{username}}</td>
+                <td>{{email}}</td>
+                <td>{{isadmin}}</td>
+                <td>{{_toLongDate createdAt}}</td>
+                <td>
+                    <button class="btn btn-primary edit-btn" data-id="{{_id}}" data-username="{{username}}"
+                        data-email="{{email}}" data-isadmin="{{isadmin}}">Edit</button>
+                    <button class="btn btn-warning delete-btn" data-id="{{_id}}">Delete</button>
+                </td>
+            </tr>
+            {{/each}}
+        </tbody>
+        <tfoot></tfoot>
+    </table>
+</div>
+
+<div class="modal-container" id="user-modal">
+    <div class="modal-content">
+        <div class="modal-header clear-fix">
+            <h3 class="modal-heading" id="user-modal-heading"></h3>
+            <a class="modal-close" href="#"><i class="fas fa-times"></i></a>
+        </div>
+        <div class="modal-body">
+            <div class="new-user-form">
+                <span id="error-span" class="text-error"></span>
+                <form method="POST" action="" enctype="application/json" id="user-form">
+                    <input type="hidden" name="user_id" value="0" />
+                    {{!-- <input type="hidden" name="_method" value="" /> --}}
+                    <div class="control-group">
+                        <label for="username" class="control-label">Username</label>
+                        <input type="text" name="username" id="username" class="control" placeholder="Username"
+                            required="required" />
+                    </div>
+                    <div class="control-group">
+                        <label for="email" class="control-label">Email</label>
+                        <input type="email" name="email" id="email" class="control" placeholder="Email"
+                            required="required" />
+                    </div>
+                    <div class="control-group">
+                        <label for="password" class="control-label">Password</label>
+                        <input type="password" name="password" id="password" class="control" placeholder="Password"
+                            required="required" />
+                    </div>
+                    <div class="control-group">
+                        <label for="confirm_password" class="control-label">Confirm Password</label>
+                        <input type="password" name="confirm_password" id="confirm_password" class="control"
+                            placeholder="Confirm Password" required="required" />
+                    </div>
+                    <div class="control-group">
+                        <label for="isadmin" class="control-label">
+                            Admin
+                            <input type="checkbox" name="isadmin" id="isadmin" />
+                        </label>
+                    </div>
+                    <div class="control-group text-center">
+                        <input id="submit" name="submit" type="submit" value="Save" class="btn btn-primary"
+                            data-action="" />
+                    </div>
+                </form>
+            </div>
+        </div>
+        <div class="modal-footer"></div>
+    </div>
+</div>
+<script src="/static/scripts/js/users.js"></script>
