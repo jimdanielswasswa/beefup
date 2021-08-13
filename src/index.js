@@ -1,3 +1,5 @@
+require('dotenv').config()
+require('./db/mongoose');
 const path = require('path');
 const express = require('express');
 const chalk = require('chalk');
@@ -8,7 +10,6 @@ const moment = require('moment');
 // const passport = require('passport');
 // const LocalStrategy = require('passport-local').Strategy;
 
-require('./db/mongoose');
 const auth_router = require('./routers/auth');
 const app_router = require('./routers/app');
 const user_router = require('./routers/user');
