@@ -1,0 +1,85 @@
+<link rel="stylesheet" href="/static/styles/css/gallery.css">
+<link rel="stylesheet" type="text/css" href="/static/styles/css/page-content.css" />
+<div class="col-3-0f-4 table-container">
+    <div class="row">
+        <div class="col-4-0f-4">
+            <a href="#page-content-modal" class="link btn btn-primary" id="add-page-content">Add Gallery Content</a>
+        </div>
+    </div>
+    <span id="page-success" class="text-success"></span>
+    <span id="page-error" class="text-error"></span>
+    {{#each pageImages}}
+    <div class="col-1-0f-4">
+        <div class="gallery-image-container">
+            <img class="gallery-image" src="/page-content/{{this._id}}/image" alt="" srcset="" />
+            <div class="command-list">
+                <a href="#" class="delete-gallery-image">
+                    <i class="fa fa-times"  data-id="{{this._id}}"></i>
+                </a>
+            </div>
+        </div>
+    </div>
+    {{/each}}
+    {{!-- <table>
+        <thead>
+            <tr>
+                <td>No.</td>
+                <td>Page</td>
+                <td>Added</td>
+                <td>Added By</td>
+                <td>Actions</td>
+            </tr>
+        </thead>
+        <tbody>
+            {{#each pages}}
+            <tr>
+                <td>{{_increment @index}}</td>
+                <td>
+                    <a href="/page-content/{{_id}}" target="self" class="link nav-link">{{pagename}}</a>
+
+                </td>
+                <td>{{_toLongDate createdAt}}</td>
+                <td>{{createdby.username}}</td>
+                <td>
+                    <button class="btn btn-primary edit-btn" data-id="{{_id}}"
+                        data-pagename="{{pagename}}">Edit</button>
+                    <button class="btn btn-warning delete-btn" data-id="{{_id}}">Delete</button>
+                </td>
+            </tr>
+            {{/each}}
+        </tbody>
+        <tfoot></tfoot>
+    </table> --}}
+</div>
+<div class="modal-container" id="page-content-modal">
+    <div class="modal-content">
+        <div class="modal-header clear-fix">
+            <h3 class="modal-heading" id="page-content-modal-heading">upload Gallery Images</h3>
+            <a class="modal-close" href="#"><i class="fas fa-times"></i></a>
+        </div>
+        <div class="modal-body">
+            <div class="new-page-content-form">
+                <span id="error-span" class="text-error"></span>
+                <form method="POST" action="/page-content/" enctype="multipart/form-data" id="page-content-form">
+                    {{!-- <div class="control-group">
+                        <label for="pagename" class="control-label">Page Name</label>
+                        <input type="text" name="pagename" id="pagename" class="control" value="Gallery"
+                            required="required" />
+                    </div> --}}
+                    <div class="control-group">
+                        <label for="pageimages" class="control-label">Images <span
+                                style="color: #ff0000; font-style: italic">4 max</span></label>
+                        <input type="file" name="pageimages" id="pageimages" class="control" placeholder="Images"
+                            required="required" multiple="multiple" />
+                    </div>
+                    <div class="control-group text-center">
+                        <input id="submit" name="submit" type="submit" value="Save" class="btn btn-primary" />
+                    </div>
+                </form>
+            </div>
+        </div>
+        <div class="modal-footer"></div>
+    </div>
+</div>
+<script src="/static/scripts/js/utils.js"></script>
+<script src="/static/scripts/js/page-content.js"></script>

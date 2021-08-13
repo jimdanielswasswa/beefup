@@ -16,11 +16,25 @@
     {{>header}}
     <div class="container">
         <main>
-            {{{body}}}
+            <div class="row">
+                <div class="col-1-0f-4">
+                    <aside class="sidebar">
+                        <ul class="sidebar-menu">
+                            <li class="link-divider"><a href="/users/" class="link navlink">Users</a></li>
+                            <li class="link-divider"><a href="/menu-items/" class="link navlink">Menu Items</a></li>
+                            <li class="link-divider"><a href="/page-content/" class="link navlink">Gallery Content</a></li>
+                            <li class="link-divider"><a href="/service-items/" class="link navlink">Services</a></li>
+                            <li><a href="/reservations/" class="link navlink">Reservations</a></li>
+                        </ul>
+                    </aside>
+                </div>
+                {{{body}}}
+            </div>
         </main>
     </div>
     {{>footer}}
-    <div class="modal-container" id="contact-modal">
+
+        <div class="modal-container" id="contact-modal">
         <div class="modal-content">
             <div class="modal-header clear-fix">
                 <h3 class="modal-heading">Contact Us</h3>
@@ -28,7 +42,7 @@
             </div>
             <div class="modal-body">
                 <div class="contact-form">
-                    <form name="contact-form" id="contact-form">
+                    <form action="/contact" method="POST" name="contact-form">
                         <div class="control-group">
                             <label for="from" class="control-label">Name</label>
                             <input type="text" name="from" id="from" class="control form-control" required="required"
@@ -66,7 +80,7 @@
             </div>
             <div class="modal-body">
                 <div class="reservation-form">
-                    <form name="reservation-form" id="reservation-form">
+                    <form action="/reservations" method="POST" name="reservation-form" id="reservation-form">
                         <div class="control-group">
                             <label for="name" class="control-label">Name</label>
                             <input type="text" name="clientname" id="clientname" class="control form-control"
@@ -83,13 +97,13 @@
                                 placeholder="Phone Number" minlength="10" />
                         </div>
                         <div class="control-group">
-                            <label for="message" class="control-label">Additional Details</label>
+                            <label for="additionaldetails" class="control-label">Additional Details</label>
                             <textarea name="additionaldetails" id="additionaldetails" rows="2"
                                 class="control form-textarea" placeholder="Additional Details" minlength="10"
                                 required="required"></textarea>
                         </div>
                         <div class="control-group clear-fix">
-                            <label for="reservationdatetime" class="control-label">Date & Time Booked</label>
+                            <label for="reservation-date" class="control-label">Date & Time Booked</label>
                             {{!-- <div class="row">
                                 <div class=col-1-0f-3>
                                     <input type="date" name="reservationdate" id="reservationdate"
@@ -158,8 +172,6 @@
     <script src="/static/scripts/js/flatpickr.min.js"></script>
     <script src="/static/scripts/js/utils.js"></script>
     <script src="/static/scripts/js/main.js"></script>
-    <script src="/static/scripts/js/contact.js"></script>
-    <script src="/static/scripts/js/reservations.js"></script>
 </body>
 
 </html>
