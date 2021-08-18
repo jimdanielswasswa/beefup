@@ -2,11 +2,16 @@ const send_request = ({ url, method }) => new Promise((resolve, reject) => {
     debugger
     const request = new XMLHttpRequest();
     request.onload = (e) => {
-        const response = JSON.parse(request.response);
-        if (response.message) {
-            resolve(response);
-        } else {
-            reject(response.error);
+        debugger
+        try {
+            const response = JSON.parse(request.response);
+            if (response.message) {
+                resolve(response);
+            } else {
+                reject(response.errors);
+            }
+        } catch (e) {
+            window.location.reload();
         }
     };
     request.onerror = (e) => {
@@ -26,7 +31,7 @@ const submit_data = ({ url, method, data }) => new Promise((resolve, reject) => 
         if (response.message) {
             resolve(response);
         } else {
-            reject(response.error);
+            reject(response.errors);
         }
     };
     request.onerror = () => {

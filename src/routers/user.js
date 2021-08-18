@@ -5,15 +5,11 @@ const User = require('../db/models/User');
 const router = new express.Router();
 
 router.get('/users/', auth, async (req, res) => {
-    if (req.user.isadmin) {
-        const users = await User.find({}, { "username": 1, "email": 1, "isadmin": 1, "createdAt": 1 });
-        if (((!users) || (users.length <= 0))) {
-            return res.status(404).json({ error: "No Users Found.", data: undefined });
-        }
-        return res.render('users', { layout: 'admin-master', users });
-    } else {
-        return res.status(403).json({ error: 'Insufficient Rights.' });
+    const users = await User.find({}, { "username": 1, "email": 1, "isadmin": 1, "createdAt": 1 });
+    if (((!users) || (users.length <= 0))) {
+        return res.status(404).json({ error: "No Users Found.", data: undefined });
     }
+    return res.render('users', { layout: 'admin-master', users, auth:{ user: req.user.getPublicInfo(), isAauthenticated: req.isAuthenticated() } });
 });
 router.get('/users/:id', auth, async (req, res) => {
     const userId = (req.params.id) ? req.params.id.trim() : 0;

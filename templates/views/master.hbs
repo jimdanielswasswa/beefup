@@ -7,7 +7,8 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Beefup</title>
     <link rel="stylesheet" href="/static/styles/css/flatpickr.min.css" />
-    <link rel="stylesheet" href="/static/styles/css/fontawesome-all.min.css" />
+    {{!-- <link rel="stylesheet" href="/static/styles/css/fontawesome-all.min.css" /> --}}
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
     <link rel="stylesheet" type="text/css" href="/static/styles/css/main.css" />
     <link rel="stylesheet" type="text/css" href="/static/styles/css/grid.css" />
 </head>
@@ -24,7 +25,7 @@
         <div class="modal-content">
             <div class="modal-header clear-fix">
                 <h3 class="modal-heading">Contact Us</h3>
-                <a class="modal-close" href="#"><i class="fas fa-times"></i></a>
+                <a class="modal-close" href="#"><i class="fa fa-remove"></i></a>
             </div>
             <div class="modal-body">
                 <div class="contact-form">
@@ -62,7 +63,7 @@
         <div class="modal-content">
             <div class="modal-header clear-fix">
                 <h3 class="modal-heading">Book A Table</h3>
-                <a class="modal-close" href="#"><i class="fas fa-times"></i></a>
+                <a class="modal-close" href="#"><i class="fa fa-remove"></i></a>
             </div>
             <div class="modal-body">
                 <div class="reservation-form">
@@ -89,17 +90,7 @@
                                 required="required"></textarea>
                         </div>
                         <div class="control-group clear-fix">
-                            <label for="reservationdatetime" class="control-label">Date & Time Booked</label>
-                            {{!-- <div class="row">
-                                <div class=col-1-0f-3>
-                                    <input type="date" name="reservationdate" id="reservationdate"
-                                        class="control form-control" placeholder="Time Booked" required="required" />
-                                </div>
-                                <div class="col-2-of-3">
-                                    <input type="time" name="reservationtime" id="reservationtime"
-                                        class="control form-control" placeholder="Time Booked" required="required" />
-                                </div>
-                            </div> --}}
+                            <label for="reservationdatetime" class="control-label">Date & Time Booked</label>                            
                             <div class=col-4-0f-4>
                                 <input type="text" name="reservationdatetime" id="reservationdatetime"
                                     class="control form-control" placeholder="Time Booked" required="required"  />
@@ -118,12 +109,12 @@
         <div class="modal-content">
             <div class="modal-header clear-fix">
                 <h3 class="modal-heading">Login</h3>
-                <a class="modal-close" href="#"><i class="fas fa-times"></i></a>
+                <a class="modal-close" href="#"><i class="fa fa-remove"></i></a>
             </div>
             <div class="modal-body">
                 <div class="login-form">
-                    <h3 class="heading-tertiary">Login</h3>
-                    <form method="POST" action="/login">
+                    <div class="error" id="login-errors"></div>
+                    <form id="login-form">
                         <div class="control-group">
                             <label for="username" class="control-label">Username</label>
                             <input type="text" name="username" id="username" class="control" placeholder="Username" />
@@ -147,7 +138,7 @@
             <div class="modal-content">
                 <div class="modal-header clear-fix">
                     <h3 class="modal-heading"></h3>
-                    <a class="modal-close" href="#"><i class="fas fa-times"></i></a>
+                    <a class="modal-close" href="#"><i class="fa fa-remove"></i></a>
                 </div>
                 <div class="modal-body">
 

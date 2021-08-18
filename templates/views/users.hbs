@@ -42,14 +42,13 @@
     <div class="modal-content">
         <div class="modal-header clear-fix">
             <h3 class="modal-heading" id="user-modal-heading"></h3>
-            <a class="modal-close" href="#"><i class="fas fa-times"></i></a>
+            <a class="modal-close" href="#"><i class="fa fa-remove"></i></a>
         </div>
         <div class="modal-body">
             <div class="new-user-form">
                 <span id="error-span" class="text-error"></span>
                 <form method="POST" action="" enctype="application/json" id="user-form">
                     <input type="hidden" name="user_id" value="0" />
-                    {{!-- <input type="hidden" name="_method" value="" /> --}}
                     <div class="control-group">
                         <label for="username" class="control-label">Username</label>
                         <input type="text" name="username" id="username" class="control" placeholder="Username"

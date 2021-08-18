@@ -14,58 +14,23 @@
             <img class="gallery-image" src="/page-content/{{this._id}}/image" alt="" srcset="" />
             <div class="command-list">
                 <a href="#" class="delete-gallery-image">
-                    <i class="fa fa-times"  data-id="{{this._id}}"></i>
+                    <i class="fa fa-remove"  data-id="{{this._id}}"></i>
                 </a>
             </div>
         </div>
     </div>
     {{/each}}
-    {{!-- <table>
-        <thead>
-            <tr>
-                <td>No.</td>
-                <td>Page</td>
-                <td>Added</td>
-                <td>Added By</td>
-                <td>Actions</td>
-            </tr>
-        </thead>
-        <tbody>
-            {{#each pages}}
-            <tr>
-                <td>{{_increment @index}}</td>
-                <td>
-                    <a href="/page-content/{{_id}}" target="self" class="link nav-link">{{pagename}}</a>
-
-                </td>
-                <td>{{_toLongDate createdAt}}</td>
-                <td>{{createdby.username}}</td>
-                <td>
-                    <button class="btn btn-primary edit-btn" data-id="{{_id}}"
-                        data-pagename="{{pagename}}">Edit</button>
-                    <button class="btn btn-warning delete-btn" data-id="{{_id}}">Delete</button>
-                </td>
-            </tr>
-            {{/each}}
-        </tbody>
-        <tfoot></tfoot>
-    </table> --}}
 </div>
 <div class="modal-container" id="page-content-modal">
     <div class="modal-content">
         <div class="modal-header clear-fix">
             <h3 class="modal-heading" id="page-content-modal-heading">upload Gallery Images</h3>
-            <a class="modal-close" href="#"><i class="fas fa-times"></i></a>
+            <a class="modal-close" href="#"><i class="fa fa-remove"></i></a>
         </div>
         <div class="modal-body">
             <div class="new-page-content-form">
                 <span id="error-span" class="text-error"></span>
                 <form method="POST" action="/page-content/" enctype="multipart/form-data" id="page-content-form">
-                    {{!-- <div class="control-group">
-                        <label for="pagename" class="control-label">Page Name</label>
-                        <input type="text" name="pagename" id="pagename" class="control" value="Gallery"
-                            required="required" />
-                    </div> --}}
                     <div class="control-group">
                         <label for="pageimages" class="control-label">Images <span
                                 style="color: #ff0000; font-style: italic">4 max</span></label>
