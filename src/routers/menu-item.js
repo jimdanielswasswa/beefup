@@ -24,72 +24,93 @@ router.get('/menu-items/', auth, async (req, res) => {
     return res.render('menuitems', { layout: 'admin-master', menuItems });
 });
 router.get('/menu-items/:id', auth, (req, res) => { });
-router.post('/menu-items/', auth, imageUpload.single('menu-image'), async (req, res) => {
-    const { itemname, description, price, createdby = req.user._id } = req.body;
-    const image_buffer = req.file.buffer;
-    let error;
-    if (!itemname) {
-        error = "Item Name Is Required.";
-        return res.redirect(`/menu-items/#menu-item-modal?e=${error}`);
-    }
-    if (!description) {
-        error = "Description Is Required.";
-        return res.redirect(`/menu-items/#menu-item-modal?e=${error}`);
-    }
-    if (!price) {
-        error = "Price Is Required.";
-        return res.redirect(`/menu-items/#menu-item-modal?e=${error}`);
-    }
-    if (!image_buffer) {
-        error = 'Image Is Required.';
-        return res.redirect(`/menu-items/#menu-item-modal?e=${error}`);
-    }
-    let menuItem = new MenuItem({ itemname, description, price, image: await sharp(image_buffer).resize({ cover: 'Crop' }).jpeg().toBuffer(), createdby });
-    menuItem = await menuItem.save();
-    if (menuItem) {
-        res.redirect('/menu-items/');
+router.post('/menu-items/', auth, imageUpload.single('menuimage'), async (req, res) => {
+    const errors = [];
+    try {
+        const { itemname, description, price, createdby = req.user._id } = req.body;
+        const image_buffer = req.file.buffer;
+        if (!itemname) {
+            errors.push("Item Name Is Required.");
+            return res.status(400).json({ errors, message: undefined });
+        }
+        if (!description) {
+            errors.push("Description Is Required.");
+            return res.redirect(`/menu-items/#menu-item-modal?e=${error}`);
+        }
+        if (!price) {
+            errors.push("Price Is Required.");
+            return res.status(400).json({ errors, message: undefined });
+        }
+        if (!image_buffer) {
+            errors.push('Image Is Required.');
+            return res.status(400).json({ errors, message: undefined });
+        }
+        let menuItem = new MenuItem({ itemname, description, price, image: await sharp(image_buffer).resize({ cover: 'Crop' }).jpeg().toBuffer(), createdby });
+        menuItem = await menuItem.save();
+        if (menuItem) {
+            return res.status(201).json({ errors: undefined, message: 'Menu Item Successfully Created!' });
+        }
+    } catch (error) {
+        const fields = ["itemname"];
+        if (error.hasOwnProperty('errors')) {
+            fields.forEach((field) => {
+                if (e.errors[field])
+                    errors.push(e.errors[field].reason.toString());
+            });
+        } else {
+            errors.push(error.toString());
+        }
+        const status = (errors.length > 0) ? 400 : 500;
+        return res.status(status).json({ errors, data: undefined });
     }
 });
-// Handles PATCH and PUT
-router.post('/menu-items/:id', auth, imageUpload.single('menu-image'), async (req, res) => {
-    const { itemname, description, price } = req.body;
-    const id = (req.params.id) ? req.params.id : 0;
-    let image_buffer;
-    if (req.file) {
-        image_buffer = req.file.buffer;
-    }
-    let error;
-    if (!itemname) {
-        error = "Item Name Is Required.";
-        return res.redirect(`/menu-items/#menu-item-modal?e=${error}`);
-    }
-    if (!description) {
-        error = "Description Is Required.";
-        return res.redirect(`/menu-items/#menu-item-modal?e=${error}`);
-    }
-    if (!price) {
-        error = "Price Is Required.";
-        return res.redirect(`/menu-items/#menu-item-modal?e=${error}`);
-    }
-
-    // if(!image_buffer){
-    //     error = 'Image Is Required.';
-    //     return res.redirect(`/menu-items/#menu-item-modal?e=${error}`);
-    // }  
-    let menuItem = await MenuItem.findById(id);
-    if (menuItem) {
-        menuItem.itemname = itemname;
-        menuItem.description = description;
-        menuItem.price = price;
-        if (image_buffer) {
-            menuItem.image = await sharp(image_buffer).resize({ cover: 'Crop' }).jpeg().toBuffer();
+router.patch('/menu-items/:id', auth, imageUpload.single('menuimage'), async (req, res) => {
+    const errors = [];
+    try {
+        const { itemname, description, price } = req.body;
+        const id = (req.params.id) ? req.params.id : 0;
+        let image_buffer;
+        if (req.file) {
+            image_buffer = req.file.buffer;
         }
+        if (!itemname) {
+            errors.push("Item Name Is Required.");
+            return res.status(400).json({ errors, message: undefined });
+        }
+        if (!description) {
+            errors.push("Description Is Required.");
+            return res.status(400).json({ errors, message: undefined });
+        }
+        if (!price) {
+            errors.push("Price Is Required.");
+            return res.status(400).json({ errors, message: undefined });
+        }
+        let menuItem = await MenuItem.findById(id);
+        if (menuItem) {
+            menuItem.itemname = itemname;
+            menuItem.description = description;
+            menuItem.price = price;
+            if (image_buffer) {
+                menuItem.image = await sharp(image_buffer).resize({ cover: 'Crop' }).jpeg().toBuffer();
+            }
+        }
+        menuItem = await menuItem.save();
+        if (menuItem) {
+            return res.status(200).json({ errors: undefined, message: 'Menu Item Successfully Updated!' });
+        }
+    } catch (e) {
+        const fields = ["itemname"];
+        if (e.hasOwnProperty('errors')) {
+            fields.forEach((field) => {
+                if (e.errors[field])
+                    errors.push(e.errors[field].reason.toString());
+            });
+        } else {
+            errors.push(e.toString());
+        }
+        const status = (errors.length > 0) ? 400 : 500;
+        return res.status(status).json({ errors, data: undefined });
     }
-    menuItem = await menuItem.save();
-    if (menuItem) {
-        return res.redirect(`/menu-items/`);
-    }
-    // TODO Handle Errors;
 });
 router.delete('/menu-items/:id', auth, async (req, res) => {
     const id = (req.params.id) ? req.params.id : 0;

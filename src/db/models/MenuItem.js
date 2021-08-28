@@ -28,11 +28,19 @@ const menuItemSchema = new mongoose.Schema({
 }, {
     timestamps: true
 });
-menuItemSchema.methods.get_menuItem = function() {
+menuItemSchema.methods.get_menuItem = function () {
     const obj = this.toObject();
     delete obj.image;
     return obj;
 };
+menuItemSchema.post('save', async function (error, document, next) {    
+    if (error.name === 'MongoError' && error.code === 11000) {
+        if (error.toString().indexOf('itemname') > -1) {
+            throw new Error('Item Name Already In Use.');
+        }
+    }
+    next();
+});
 const MenuItem = mongoose.model('MenuItem', menuItemSchema);
 
 module.exports = MenuItem;

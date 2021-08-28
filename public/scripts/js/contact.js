@@ -8,7 +8,7 @@ contact_form.addEventListener('submit', (e) => {
         phonenumber: contact_form["phonenumber"].value,
         message: contact_form["message"].value
     };
-    submit_data({ url: `/contact/`, method: 'POST', data }).then((response) => {
+    submit_json_data({ url: `/contact/`, method: 'POST', data }).then((response) => {
         window.location.href = window.location.href.substring(0, (window.location.href.indexOf('#')));
     }).catch((e) => {
         alert(e);

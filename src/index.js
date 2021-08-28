@@ -8,8 +8,10 @@ const moment = require('moment');
 const session = require('express-session');
 const passport = require('passport');
 const flash = require('connect-flash');
+const MongoStore = require('connect-mongo');
 const initPassport = require('./config/passport');
 
+const MONGODB_URI = require('./db/mongoose');
 const auth_router = require('./routers/auth');
 const app_router = require('./routers/app');
 const user_router = require('./routers/user');
@@ -35,7 +37,8 @@ app.use(express.urlencoded({
 app.use(session({
     secret: 'beefup-secret-key',
     resave: false,
-    saveUninitialized: false
+    saveUninitialized: false,
+    store: MongoStore.create({ mongoUrl: MONGODB_URI })
 }));
 app.use(passport.initialize());
 app.use(passport.session());

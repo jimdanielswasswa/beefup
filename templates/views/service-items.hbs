@@ -31,7 +31,7 @@
                             class="service-item-photo" />
                     </div>
                 </td>
-                <td><div class="item-description">{{description}} {{itemname}}</div></td>
+                <td><div class="item-description">{{description}}</div></td>
                 <td>{{startprice}}</td>
                 <td>{{_toLongDate createdAt}}</td>
                 <td>{{createdby.username}}</td>
@@ -55,10 +55,10 @@
         <div class="modal-body">
             <div class="new-service-item-form">
                 <span id="error-span" class="text-error"></span>
-                <form method="POST" action="/service-items/" enctype="multipart/form-data" id="service-item-form">
+                <form enctype="multipart/form-data" id="service-item-form">
                     <input type="hidden" name="service-item-id" value="0" />
                     <div class="control-group">
-                        <label for="itemname" class="control-label">Item Name</label>
+                        <label for="itemname" class="control-label">Service Name</label>
                         <input type="text" name="itemname" id="itemname" class="control" placeholder="Item Name"
                             required="required" />
                     </div>
@@ -78,7 +78,7 @@
                             placeholder="Additional Details" minlength="5" required="required"></textarea>
                     </div>
                     <div class="control-group text-center">
-                        <input id="submit" name="submit" type="submit" value="Save" class="btn btn-primary"/>
+                        <input id="save-btn" name="save-btn" type="submit" value="Save" class="btn btn-primary"  data-action=""/>
                     </div>
                 </form>
             </div>

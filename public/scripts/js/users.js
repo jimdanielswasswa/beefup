@@ -34,36 +34,29 @@ delete_buttons.forEach((btn) => {
     });
 });
 
-// user_form.addEventListener('submit', (e) => {
-//     debugger
-//     e.preventDefault();
-//     e.stopPropagation();
-//     const u_form = e.target;
-//     const user_id = user_form["user_id"].value;
-//     const username = user_form["username"].value;
-//     const email = user_form["email"].value;
-//     const is_admin = user_form["isadmin"].checked;
-//     const password = user_form["password"].value;
-//     const confirm_password = user_form["confirm_password"].value;
-//     const action_type = user_form["submit"].dataset.action;
+user_form.addEventListener('submit', async (e) => {
+    debugger
+    e.preventDefault();
+    e.stopPropagation();
 
-//     if (action_type == 'CREATE') {
-//         submit_data({ url: '/users/', method: 'POST', data: { username, email, password, confirm_password, isadmin: is_admin } })
-//             .then((response) => {
-//                 window.location.href = '/users/';
-//                 page_success.innerText = response.message;
-//             })
-//             .catch((error) => form_error_control.innerText = error);
-
-//     } else if (action_type == 'UPDATE') {
-//         submit_data({ url: `/users/${user_id}`, method: 'PATCH', data: { username, email, password, confirm_password, isadmin: is_admin } })
-//             .then((response) => {
-//                 window.location.href = '/users/';
-//                 page_success.innerText = response.message;
-//             })
-//             .catch((error) => form_error_control.innerText = error);
-//     }
-// });
+    try {
+        const username = user_form["username"].value;
+        const email = user_form["email"].value;
+        const is_admin = user_form["isadmin"].checked;
+        const password = user_form["password"].value;
+        const confirm_password = user_form["confirm_password"].value;
+        const url = '/users/';
+        const method = user_form["save-btn"].dataset.action;        
+        const data = { username, email, password, confirm_password, isadmin: is_admin };
+        await submit_json_data({ url: (`${url} ${(method === 'PATCH') ? user_form["user_id"].value : ''}`), method, data });
+        window.location.href = url;
+    } catch (response) {
+        form_error_control.innerText = '';
+        response.errors.forEach((e) => {
+            form_error_control.innerText += `${e} \n`;
+        });
+    }
+});
 
 const load_user_form = (user) => {
     if (user) {
@@ -78,39 +71,14 @@ const load_user_form = (user) => {
         if (user_form["confirm_password"].attributes.getNamedItem('required')) {
             user_form["confirm_password"].attributes.removeNamedItem('required');
         }
-        // user_form["submit"].dataset.action = 'UPDATE';
-        user_form.attributes.getNamedItem('action').value = `/users/${user.id}`;
-        // user_form.attributes.getNamedItem('method').value = 'PATCH';
-        // user_form["_method"].value = 'PATCH';
+        user_form["save-btn"].dataset.action = 'PATCH';
     } else {
         clear_user_form();
-        // user_form["submit"].dataset.action = 'CREATE';    
+        user_form["save-btn"].dataset.action = 'POST';
         user_modal_heading.innerText = 'Add New User';
-        user_form.attributes.getNamedItem('action').value = `/users/`;
-        user_form.attributes.getNamedItem('method').value = 'POST';
-    }    
+    }
     window.location.href = "#user-modal";
 };
-
-// const submit_data = ({ url, method, data }) => new Promise((resolve, reject) => {
-//     debugger
-//     const request = new XMLHttpRequest();
-//     request.onload = () => {
-//         debugger
-//         const response = JSON.parse(request.response);
-//         if (response.message) {
-//             resolve(response);
-//         } else {
-//             reject(response.error);
-//         }
-//     };
-//     request.onerror = () => {
-//         reject(request.response);
-//     }
-//     request.open(method, url, true);
-//     request.setRequestHeader('Content-Type', 'application/json');
-//     request.send(JSON.stringify(data));
-// });
 const clear_user_form = () => {
     user_form["username"].value = '';
     user_form["email"].value = '';

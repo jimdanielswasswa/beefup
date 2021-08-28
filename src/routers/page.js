@@ -20,7 +20,6 @@ const imageUpload = multer({
 });
 
 router.get('/page-content/', auth, async (req, res) => {
-    // const pages = await Page.find({}, { 'images': 0 }).populate('createdby').exec();
     const pageImages = await PageImage.find({  }, { image: 1 });
     return res.render('page-content', { layout: 'admin-master', pageImages });
 });
@@ -40,32 +39,11 @@ router.post('/page-content/', auth, imageUpload.array('pageimages', 4), async (r
         return res.status(401).json('Page Name Is Required.');
     }
     let pageContent = new Page({ pagename, createdby: req.user._id });
-    // uploaded.push({ image: await sharp(files[0].buffer).resize({ cover: 'Crop' }).jpeg().toBuffer() });
-    // if (files[0]) {
-    //     uploaded.push(await sharp(files[0].buffer).resize({ cover: 'Crop' }).jpeg().toBuffer());
-    // }
-    // if (files[1]) {
-    //     uploaded.push(await sharp(files[1].buffer).resize({ cover: 'Crop' }).jpeg().toBuffer());
-    // }
-    // if (files[2]) {
-    //     uploaded.push(await sharp(files[2].buffer).resize({ cover: 'Crop' }).jpeg().toBuffer());
-    // }
-    // if (files[3]) {
-    //     uploaded.push(await sharp(files[3].buffer).resize({ cover: 'Crop' }).jpeg().toBuffer());
-    // }
-    // if (pageContent.images && pageContent.images.length > 0) {
-    //     pageContent.images.concat(uploaded);
-    // } else {
-    //     pageContent.images = uploaded;
-    // }
     pageContent = await pageContent.save();
     files.forEach(async (element) => {
         const pageImages = new PageImage({ image: await sharp(element.buffer).resize({ cover: 'Crop' }).jpeg().toBuffer(), page: pageContent._id });
         await pageImages.save();
-        // uploaded.push({ image: await sharp(element.buffer).resize({ cover: 'Crop' }).jpeg().toBuffer() });
     });
-    // const pageImages = new PageImage({ images: uploaded, page: pageContent._id });
-    // await pageImages.save();
     if (pageContent) {
         return res.redirect(`/page-content/`);
     }

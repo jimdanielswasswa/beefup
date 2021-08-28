@@ -65,7 +65,6 @@ main {
 }
 .row {
     max-width: 100%;
-    /* margin: 0 auto; */
     position: relative;
 }
 a {
@@ -114,11 +113,9 @@ footer {
     position: relative;
     padding: 2rem 1.5rem;
     width: 100%;
-    /* height: 15vh; */
     font-size: 1.8rem;
     color: #3f2800;
     background-color: #ffe4b6;
-    /* margin-top: 1rem; */
 }
 .copyrite {
     line-height: 4rem;
@@ -219,13 +216,7 @@ table tr:not(:last-child) {
 .heading-tertiary {
     color: #ffb73f;    
     font-family: inherit; 
-    /* text-transform: uppercase; */
 }
-/* .heading-tertiary {
-    color: #ffffff;
-    font-size: 2.5rem;
-    text-align: center;
-} */
 .sub-heading {
     font-size: 2rem;
     font-weight: normal;
@@ -398,7 +389,6 @@ table tr:not(:last-child) {
 }
 .map-container {
     width: 100%;
-    /* background-color: #00ff00; */
     height: 45rem;
 }
 .text-error {

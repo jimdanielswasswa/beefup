@@ -5,7 +5,6 @@ const User = require('./User');
 const pageSchema = mongoose.Schema({
     pagename: {
         type: String,
-        // required: true,
         trim: true,
         lowerCase: true
     },

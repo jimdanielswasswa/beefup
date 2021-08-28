@@ -57,7 +57,6 @@ router.post('/reservations', async (req, res) => {
         console.log(e);
     }
 });
-// HANDLES PATCH AND PUT
 router.patch('/reservations/:id', async (req, res) => {
     try {
         const id = req.params.id || 0;

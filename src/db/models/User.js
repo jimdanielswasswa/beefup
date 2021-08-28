@@ -1,21 +1,25 @@
 const mongoose = require('mongoose');
 const bcrypt = require('bcrypt');
 const jwt = require('jsonwebtoken');
-const chalk = require('chalk');
+const validator = require('validator');
 
 const user_schema = new mongoose.Schema({
     username: {
         type: String,
         trim: true,
         required: true,
-        unique: true
+        unique: true,
+        validate(value){
+            if(value.trim().length < 4){
+                throw Error('Username Must Be 4 Or More Characters Long.');
+            }
+        }
     },
     password: {
         type: String,
         trim: true,
-        minLength: 8,
         required: true,
-        validator: (value) => {
+        validate(value) {
             if(value.trim().length < 8){
                 throw Error('Password Must Be 8 Or More Characters Long.');
             }
@@ -26,19 +30,18 @@ const user_schema = new mongoose.Schema({
         trim: true,
         lowercase: true,
         required: true,
-        unique: true
+        unique: true,
+        validate(value){
+            if(!validator.isEmail(value.trim())){
+                throw new Error("Invalid Email");
+            }
+        }
     },
     isadmin: {
         type: Boolean,
         required: true,
         default: false
-    },
-    tokens: [{
-        token: {
-            type: String,
-            required:true
-        }
-    }]
+    }
 }, {
     timestamps: true
 });
@@ -68,6 +71,16 @@ user_schema.methods.getPublicInfo = function(){
 user_schema.pre('save', async function(next){
     if(this.isModified('password')){
         this.password = await bcrypt.hash(this.password, 8);
+    }
+    next();
+});
+user_schema.post('save', async function(error, doc, next){
+    if(error.name === 'MongoError' && error.code === 11000){
+        if(error.toString().indexOf('username') > -1){
+            throw new Error('Username Already Taken.');
+        }  else if(error.toString().indexOf('email') > -1){
+            throw new Error('Email Already Taken.');
+        }
     }
     next();
 });

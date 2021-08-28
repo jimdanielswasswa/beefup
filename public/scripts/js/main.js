@@ -16,7 +16,7 @@ loginForm.addEventListener('submit', (e) => {
     e.stopPropagation();
     debugger
     const data = { username: loginForm["username"].value, password: loginForm["password"].value };
-    submit_data({ url: 'login', method: 'POST', data }).then((response) => {
+    submit_json_data({ url: 'login', method: 'POST', data }).then((response) => {
         window.location.href = response.destination;
     }).catch((errors) => {
         errorOutput.innerHTML = '';

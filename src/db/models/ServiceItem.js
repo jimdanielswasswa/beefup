@@ -28,6 +28,14 @@ const serviceItemSchema = new mongoose.Schema({
 }, {
     timestamps: true
 });
+serviceItemSchema.post('save', async function (error, document, next) {    
+    if (error.name === 'MongoError' && error.code === 11000) {
+        if (error.toString().indexOf('itemname') > -1) {
+            throw new Error('Service Name Already In Use.');
+        }
+    }
+    next();
+});
 
 const ServiceItem = mongoose.model('ServiceItem', serviceItemSchema);
 

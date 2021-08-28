@@ -25,71 +25,92 @@ router.get('/service-items/', auth, async (req, res) => {
 });
 router.get('/service-items/:id', auth, (req, res) => { });
 router.post('/service-items/', auth, imageUpload.single('service-image'), async (req, res) => {
-    const { itemname, description, startprice, createdby = req.user._id } = req.body;
-    const image_buffer = req.file.buffer;
-    let error;
-    if (!itemname) {
-        error = "Item Name Is Required.";
-        return res.redirect(`/service-items/#service-item-modal?e=${error}`);
-    }
-    if (!description) {
-        error = "Description Is Required.";
-        return res.redirect(`/service-items/#service-item-modal?e=${error}`);
-    }
-    if (!startprice) {
-        error = "Price Is Required.";
-        return res.redirect(`/service-items/#service-item-modal?e=${error}`);
-    }
-    if (!image_buffer) {
-        error = 'Image Is Required.';
-        return res.redirect(`/service-items/#service-item-modal?e=${error}`);
-    }
-    let serviceItem = new ServiceItem({ itemname, description, startprice, image: await sharp(image_buffer).resize({ cover: 'Crop' }).jpeg().toBuffer(), createdby });
-    serviceItem = await serviceItem.save();
-    if (serviceItem) {
-        res.redirect('/service-items/');
+    const errors = [];
+    try {
+        const { itemname, description, startprice, createdby = req.user._id } = req.body;
+        const image_buffer = req.file.buffer;
+        if (!itemname) {
+            errors.push("Service Name Is Required.");
+            return res.status(400).json({ errors, message: undefined });
+        }
+        if (!description) {
+            errors.push("Description Is Required.");
+            return res.redirect(`/menu-items/#menu-item-modal?e=${error}`);
+        }
+        if (!startprice) {
+            errors.push("Price Is Required.");
+            return res.status(400).json({ errors, message: undefined });
+        }
+        if (!image_buffer) {
+            errors.push('Image Is Required.');
+            return res.status(400).json({ errors, message: undefined });
+        }
+        let serviceItem = new ServiceItem({ itemname, description, startprice, image: await sharp(image_buffer).resize({ cover: 'Crop' }).jpeg().toBuffer(), createdby });
+        serviceItem = await serviceItem.save();
+        if (serviceItem) {
+            return res.status(201).json({ errors: undefined, message: 'Service Successfully Created!' });
+        }
+    } catch (e) {
+        const fields = ["itemname"];
+        if (e.hasOwnProperty('errors')) {
+            fields.forEach((field) => {
+                if (e.errors[field])
+                    errors.push(e.errors[field].reason.toString());
+            });
+        } else {
+            errors.push(e.toString());
+        }
+        const status = (errors.length > 0) ? 400 : 500;
+        return res.status(status).json({ errors, data: undefined });
     }
 });
-// Handles PATCH and PUT
-router.post('/service-items/:id', auth, imageUpload.single('service-image'), async (req, res) => {
-    const { itemname, description, startprice } = req.body;
-    const id = (req.params.id) ? req.params.id : 0;
-    let image_buffer;
-    if (req.file) {
-        image_buffer = req.file.buffer;
-    }
-    let error;
-    if (!itemname) {
-        error = "Item Name Is Required.";
-        return res.redirect(`/service-items/#service-item-modal?e=${error}`);
-    }
-    if (!description) {
-        error = "Description Is Required.";
-        return res.redirect(`/service-items/#service-item-modal?e=${error}`);
-    }
-    if (!startprice) {
-        error = "Price Is Required.";
-        return res.redirect(`/service-items/#service-item-modal?e=${error}`);
-    }
-
-    // if(!image_buffer){
-    //     error = 'Image Is Required.';
-    //     return res.redirect(`/service-items/#service-item-modal?e=${error}`);
-    // }  
-    let serviceItem = await ServiceItem.findById(id);
-    if (serviceItem) {
-        serviceItem.itemname = itemname;
-        serviceItem.description = description;
-        serviceItem.startprice = startprice;
-        if (image_buffer) {
-            serviceItem.image = await sharp(image_buffer).resize({ cover: 'Crop' }).jpeg().toBuffer();
+router.patch('/service-items/:id', auth, imageUpload.single('service-image'), async (req, res) => {
+    const errors = [];
+    try {
+        const { itemname, description, startprice } = req.body;
+        const id = (req.params.id) ? req.params.id : 0;
+        let image_buffer;
+        if (req.file) {
+            image_buffer = req.file.buffer;
         }
+        if (!itemname) {
+            errors.push("Service Name Is Required.");
+            return res.status(400).json({ errors, message: undefined });
+        }
+        if (!description) {
+            errors.push("Description Is Required.");
+            return res.redirect(`/menu-items/#menu-item-modal?e=${error}`);
+        }
+        if (!startprice) {
+            errors.push("Price Is Required.");
+            return res.status(400).json({ errors, message: undefined });
+        }
+        let serviceItem = await ServiceItem.findById(id);
+        if (serviceItem) {
+            serviceItem.itemname = itemname;
+            serviceItem.description = description;
+            serviceItem.startprice = startprice;
+            if (image_buffer) {
+                serviceItem.image = await sharp(image_buffer).resize({ cover: 'Crop' }).jpeg().toBuffer();
+            }
+        }
+        serviceItem = await serviceItem.save();
+        if (serviceItem) {
+            return res.status(201).json({ errors: undefined, message: 'Service Successfully Updated!' });
+        }
+    } catch (e) {
+        const fields = ["itemname"];
+        if (e.hasOwnProperty('errors')) {
+            fields.forEach((field) => {
+                if (e.errors[field])
+                    errors.push(e.errors[field].reason.toString());
+            });
+        } else {
+            errors.push(e.toString());
+        }
+        const status = (errors.length > 0) ? 400 : 500;
+        return res.status(status).json({ errors, data: undefined });
     }
-    serviceItem = await serviceItem.save();
-    if (serviceItem) {
-        return res.redirect(`/service-items/`);
-    }
-    // TODO Handle Errors;
 });
 router.delete('/service-items/:id', auth, async (req, res) => {
     const id = (req.params.id) ? req.params.id : 0;

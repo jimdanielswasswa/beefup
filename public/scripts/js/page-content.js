@@ -24,24 +24,10 @@ delete_buttons.forEach((btn) => {
         send_request({ url: `/page-content/${e.target.dataset.id}`, method: 'DELETE' })
         .then((response) => {
             window.location.href = '/page-content/';
-            // page_success.innerText = response.message;
         })
-        .catch((error) => /*page_error.innerText = error*/ console.error(error));
+        .catch((error) => console.error(error));
     });
 });
 const load_page_content_form = (page_content) => {
-    debugger
-    // if(page_content){
-    //     page_content_modal_heading.innerText = 'Edit Gallery Content';
-    //     page_content_form['pagename'].value = page_content.pagename;
-    //     page_content_form.attributes.getNamedItem('action').value = `/page-content/${page_content.id}`;
-    // } else {
-    //     clear_page_content_form();
-    //     page_content_modal_heading.innerText = 'Add Gallery Content';
-    //     page_content_form.attributes.getNamedItem('action').value = '/page-content/';
-    // }    
     window.location.href = '#page-content-modal';
-};
-const clear_page_content_form = () => {
-    // page_content_form['pagename'].value = '';
 };
